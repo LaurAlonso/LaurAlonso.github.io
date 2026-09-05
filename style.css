@@ -4,6 +4,8 @@
   --ink-soft: #56534B;
   --accent: #7A5C3E;
   --rule: #DDD8CC;
+  --tile-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23F5EFE0'/%3E%3Cpath d='M0,0 L38,0 A38,38 0 0 1 0,38 Z' fill='%23285C82'/%3E%3Cpath d='M100,0 L100,38 A38,38 0 0 1 62,0 Z' fill='%23285C82'/%3E%3Cpath d='M100,100 L62,100 A38,38 0 0 1 100,62 Z' fill='%23285C82'/%3E%3Cpath d='M0,100 L0,62 A38,38 0 0 1 38,100 Z' fill='%23285C82'/%3E%3Ccircle cx='50' cy='50' r='9' fill='none' stroke='%23285C82' stroke-width='2.5'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23285C82'/%3E%3Crect x='0.5' y='0.5' width='99' height='99' fill='none' stroke='%23E4DCC5' stroke-width='1'/%3E%3C/svg%3E");
+  --tile-size: 110px;
 }
 
 html[data-theme="dark"] {
@@ -12,6 +14,7 @@ html[data-theme="dark"] {
   --ink-soft: #A9A497;
   --accent: #C9A574;
   --rule: #33323A;
+  --tile-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23172231'/%3E%3Cpath d='M0,0 L38,0 A38,38 0 0 1 0,38 Z' fill='%23B8935F'/%3E%3Cpath d='M100,0 L100,38 A38,38 0 0 1 62,0 Z' fill='%23B8935F'/%3E%3Cpath d='M100,100 L62,100 A38,38 0 0 1 100,62 Z' fill='%23B8935F'/%3E%3Cpath d='M0,100 L0,62 A38,38 0 0 1 38,100 Z' fill='%23B8935F'/%3E%3Ccircle cx='50' cy='50' r='9' fill='none' stroke='%23B8935F' stroke-width='2.5'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23B8935F'/%3E%3Crect x='0.5' y='0.5' width='99' height='99' fill='none' stroke='%230D141C' stroke-width='1'/%3E%3C/svg%3E");
 }
 
 * { box-sizing: border-box; }
@@ -22,12 +25,26 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
   color: var(--ink);
   font-family: "Source Serif 4", Georgia, serif;
   font-size: 18px;
   line-height: 1.6;
-  transition: background 0.2s ease, color 0.2s ease;
+  background-color: var(--rule);
+  background-image: var(--tile-url);
+  background-size: var(--tile-size) var(--tile-size);
+  background-attachment: fixed;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* The tile pattern lives on the body; everything readable sits on this
+   opaque sheet so text always has full contrast, regardless of theme. */
+.sheet {
+  max-width: 688px;
+  margin: 40px auto;
+  padding: 0 0 8px;
+  background: var(--bg);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
 main, section, footer, header.topnav {
@@ -212,8 +229,17 @@ footer {
 /* Responsive */
 
 @media (max-width: 480px) {
-  body { font-size: 16px; }
+  body {
+    font-size: 16px;
+    background-attachment: scroll;
+    background-size: 70px 70px;
+  }
   header.topnav nav a { margin-right: 12px; }
+  .sheet {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
 }
 
 /* Reduced motion */
