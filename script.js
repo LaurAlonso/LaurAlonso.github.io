@@ -18,3 +18,31 @@
     localStorage.setItem("theme", next);
   });
 })();
+
+// Click (or press Enter/Space) on an interest word to cycle it to
+// another word from its list, like the swap-on-click on jredondoyuste.github.io.
+(function () {
+  const swaps = document.querySelectorAll(".word-swap");
+
+  swaps.forEach(function (el) {
+    const words = el.dataset.words.split("|");
+    let index = 0;
+
+    function cycle() {
+      el.classList.add("swapping");
+      setTimeout(function () {
+        index = (index + 1) % words.length;
+        el.textContent = words[index];
+        el.classList.remove("swapping");
+      }, 150);
+    }
+
+    el.addEventListener("click", cycle);
+    el.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        cycle();
+      }
+    });
+  });
+})();
